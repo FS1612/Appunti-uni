@@ -1,0 +1,31 @@
+Stanze:
+N10
+N11
+Biblioteca
+Cortile
+StanzeMagiche:
+Prezzemolo 4
+StanzeBuie:
+Buia lanterna
+StanzeBloccate:
+Bloccata sud dinamite
+Estremi:
+N10
+Biblioteca
+Attrezzi:
+Osso 5 N10
+
+Uscite:
+N10 nord Biblioteca
+Biblioteca sud N10
+N10 est N11
+N11 ovest N10
+N10 sud Prezzemolo
+Prezzemolo est Buia
+Prezzemolo ovest Bloccata
+Bloccata sud Cortile
+Personaggi:
+
+Strega N11
+Mago Spada 3 N10
+Cane Bastone 2 osso Biblioteca

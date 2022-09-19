@@ -1,0 +1,181 @@
+public class Libro {
+	private String titolo;
+
+	public Libro(String titolo) {
+		this.titolo = titolo;
+	}
+
+	public void setTitolo(String titolo) {
+		this.titolo = titolo;
+	}
+
+	public String getTitolo() {
+		return this.titolo;
+	}
+
+	public static void main(String[] argc) {
+		Libro[] scaffale = new Libro[3];
+		Libro l1;
+		
+		scaffale[0] = new Libro("I Pirati della Malesia");
+		l1 = scaffale[0];
+		scaffale[1] = l1;
+		l1 = new Libro("Le Due Tigri");
+		scaffale[2] = l1;
+		l1.setTitolo("Il Corsaro Nero");
+		scaffale[2].setTitolo("La Regina dei Caraibi");
+  		for (Libro libro : scaffale)
+			System.out.print(libro.getTitolo() + "; ");
+	}
+}
+public class SequenzaDiStringhe {
+
+    public String[] sequenza;
+
+    public SequenzaDiStringhe(int dimensione) {
+        this.sequenza = new String[dimensione];
+    }
+
+    public void aggiungiStringa(String stringa, int posizione) {
+        this.sequenza[posizione] = stringa;
+    }
+
+   public void aggiungiInCoda(String nuovaStringa) {
+       int cont =0;
+       for(int i=0; i<sequenza.length-1;i++){
+           cont++;
+       }
+       if(cont==0){
+           this.sequenza[0]=nuovaStringa;
+           
+       }
+       else if(cont<sequenza.length-1) {
+           this.sequenza[cont+1]=nuovaStringa;
+       }
+    
+}
+}
+public class Motocicletta {
+    private int anno;
+    private String targa;
+
+    public Motocicletta(String targa, int anno) {
+        this.targa = targa;
+        this.anno = anno;
+    }
+
+    public void cambioTarga(String targa){
+        this.targa = targa;
+    }
+
+    public String toString() {
+        return this.targa + " " + this.anno;
+    }
+
+    public static void main(String[] args) {
+        Motocicletta m1 = new Motocicletta("1111",1);
+        Motocicletta m2 = new Motocicletta("2222", 2);
+        Motocicletta m3 = m1; 
+
+        System.out.println(m1.toString());
+        System.out.println(m2.toString());
+
+        m2 = m3;
+        m2.cambioTarga("3333");
+
+        System.out.println(m2.toString());
+        System.out.println(m3.toString());
+    }
+}
+interface Animale {
+    public void verso();
+}
+
+class Cane implements Animale {
+    public Cane() {}
+    public void verso() {}
+}
+
+class Gatto implements Animale {
+       public Gatto() {}
+       public void verso(){}
+}
+
+public class Quiz {
+    public void scrivi(Animale r) { 
+        System.out.print("Animale "); 
+    }
+    
+    public void scrivi(Cane l) { 
+        System.out.print("Cane "); 
+    }
+    
+    public void scrivi(Gatto s) { 
+        System.out.print("Gatto "); 
+    }
+
+    public static void main(String args[]) {
+        Quiz  m = new Quiz();
+
+        Cane c = new Cane();
+        Gatto g = new Gatto();
+        Animale a = new Cane();
+      
+        a = g;
+      
+        m.scrivi(a);
+        m.scrivi(g);
+        m.scrivi(c);
+    }
+}
+Cosa stampa questo programma?
+class A {
+    public void m() {
+        System.out.print("A");
+    }
+}
+
+class B extends A {
+    public void m() {
+        System.out.print("B");
+    }
+}
+
+class C {
+    public A n() {
+        return new A();
+    }
+}
+
+class D extends C {
+    public B n() {
+        return new B();
+    }
+}
+
+class Printer {
+    public void print(A a) {
+        System.out.print("print(A)");
+        System.out.print("-");
+        a.m();
+    }
+    
+    public void print(B b) {
+        System.out.print("print(B)");
+        System.out.print("-");
+        b.m();
+    }
+}
+
+
+public class Quiz{
+
+     public static void main(String []args){
+        D d = new D();
+        
+        A obj = d.n();
+        
+        Printer x = new Printer();
+        x.print(obj);
+     }
+}

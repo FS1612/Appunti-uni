@@ -1,0 +1,81 @@
+private List<String> righeDaLeggere;
+	private int indiceRigheDaLeggere;
+	private List<String> messaggiProdotti;
+	private Partita partita;
+	private Map<Integer,List<String>> indice2messaggiProdotti;
+	private int ultimoMessaggioProdotto;
+	private int ultimoMessaggioProdottoLista;
+	public IOSimulator() {
+		this.righeDaLeggere =new ArrayList<String>();
+		this.indiceRigheDaLeggere = 0;
+		this.ultimoMessaggioProdotto=0;
+		this.messaggiProdotti = new ArrayList<String>();
+		indice2messaggiProdotti=new HashMap<Integer,List<String>>();
+	}
+
+	public IOSimulator(List<String> righeDaLeggere) {
+		this.righeDaLeggere = righeDaLeggere;
+		this.indiceRigheDaLeggere = 0;
+		this.ultimoMessaggioProdotto=0;
+		this.ultimoMessaggioProdottoLista=0;
+		this.messaggiProdotti = new ArrayList<String>();
+		indice2messaggiProdotti=new HashMap<Integer,List<String>>();
+	}
+
+	@Override
+	public void mostraMessaggio(String messaggio) {
+		if(!this.indice2messaggiProdotti.containsKey(indiceRigheDaLeggere)) {
+			this.indice2messaggiProdotti.put(this.indiceRigheDaLeggere, new LinkedList<String>());
+		}
+		List<String> temp=this.indice2messaggiProdotti.get(this.indiceRigheDaLeggere);
+		temp.add(messaggio);
+		this.messaggiProdotti.add(messaggio);
+	}
+
+	@Override
+	public String leggiRiga() {
+		
+		
+		 String rigaLetta = this.righeDaLeggere.get(this.indiceRigheDaLeggere);
+		this.indiceRigheDaLeggere++;
+		
+		return rigaLetta;
+	}
+
+	public String nextMessaggio() {
+		List<String> messaggiDaMostrare=this.indice2messaggiProdotti.get(this.ultimoMessaggioProdotto);
+		if(this.ultimoMessaggioProdottoLista<messaggiDaMostrare.size()) {
+			String  messaggio=messaggiDaMostrare.get(ultimoMessaggioProdottoLista);
+			this.ultimoMessaggioProdottoLista++;
+			return messaggio;
+		}
+		this.ultimoMessaggioProdottoLista=0;
+		this.ultimoMessaggioProdotto++;
+		return this.nextMessaggio();
+	}
+
+	public boolean hasNextMessaggio() {
+		List<String> messaggiDaMostrare=this.indice2messaggiProdotti.get(this.ultimoMessaggioProdotto);
+		if(this.ultimoMessaggioProdottoLista<messaggiDaMostrare.size()) return true;
+		return this.indice2messaggiProdotti.containsKey(this.ultimoMessaggioProdotto+1);
+	}
+
+	public String getOutput() {
+		StringBuilder sb= new StringBuilder();
+		Iterator<String> it=this.messaggiProdotti.iterator();
+		while(it.hasNext()) {
+			String messaggio=it.next();
+			sb.append(messaggio);
+		}
+		return sb.toString();
+	}
+
+	public void setInput(List<String> simulazione) {
+		righeDaLeggere=simulazione;
+
+	}
+	public void setPartita(Partita partita) {
+		this.partita=partita;
+	}
+
+}

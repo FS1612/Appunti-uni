@@ -1,0 +1,186 @@
+import java.util.*;
+
+class Studente implements Comparable<Studente> {
+    //NON toccare il codice di questa classe
+    private String matricola;
+    private int eta;
+
+    public Studente(String matricola, int eta) {
+        this.matricola = matricola;
+        this.eta = eta;
+    }
+    //NON toccare il codice di questa classe
+    public String getMatricola() {
+        return this.matricola;
+    }
+
+    public int getEta() {
+        return this.eta;
+    }
+
+    public int compareTo(Studente studente) {
+        return this.getEta() - studente.getEta();
+    }
+    //NON toccare il codice di questa classe
+}
+
+class ComparatoreStudentePerEtaMatricola implements Comparator<Studente> {
+
+    public int compare(Studente p1, Studente p2) {
+       if(p1.compareTo(p2)!=0)
+       return p1.compareTo(p2);
+       else 
+       return (Parseint(p1.getMatricola())-Parseint(p2.getMatricola()));
+           
+       
+    }
+    private int Parseint(String mat){
+        
+        return Integer.parseInt(mat);
+    }
+}
+
+public class Immatricolazioni {
+    private List<Studente> elenco;
+
+    public Immatricolazioni() {
+        this.elenco = new ArrayList<Studente>();
+    }
+
+    public void aggiungiStudente(Studente studente) {
+        this.elenco.add(studente);
+    }
+
+    public List<Studente> elencoOrdinatoPerEtaMatricola() {
+        
+       Collections.sort(this.elenco,new ComparatoreStudentePerEtaMatricola());
+        return elenco;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+import java.util.*;
+
+class Libro {
+
+    private String titolo;
+
+    private String autore;
+
+    public Libro(String titolo, String autore) {
+        this.titolo = titolo;
+        this.autore = autore;
+    }
+
+    public String getAutore() {
+        return this.autore;
+    }
+
+    public String getTitolo() {
+        return this.titolo;
+    }
+
+}
+
+
+public class RaggruppatoreLibriPerAutore {
+
+    private List<Libro> elencoLibri;
+
+    public RaggruppatoreLibriPerAutore(){
+        this.elencoLibri = new ArrayList<Libro>();
+    }
+
+    public void aggiungiLibro(Libro libro) {
+        this.elencoLibri.add(libro);
+    }
+
+    public Map<String, List<Libro>> autore2libri() {
+        
+        Map<String, List<Libro>> autore2libri = new HashMap<String, List<Libro>>();
+       
+      
+        for(Libro l: this.elencoLibri){
+            if( elencoLibri!=null){
+                if(!autore2libri.containsKey(l.getAutore())){
+                    autore2libri.put(l.getAutore(),new ArrayList<Libro>());
+                }
+                autore2libri.get(l.getAutore()).add(l);
+            }
+           
+            }
+         return autore2libri;   
+       }
+}
+
+import java.util.*;
+
+class Persona implements Comparable<Persona> {
+    private String cognome;
+
+    public Persona(String cognome) {
+        this.cognome = cognome;
+    }
+
+    public String getCognome() { return this.cognome; }  
+
+    public static TreeSet<Persona> getInsiemeOrdinato(List<Persona> listaPersone) {
+            TreeSet<Persona> SetOrdinato=new TreeSet<Persona>(listaPersone);
+            return SetOrdinato;
+    }
+public int compareTo(Persona a){
+int val=0;
+int app =0;
+// ritorna int>1 se a è maggiore del cognome di this
+app = a.getCognome().compareTo(this.getCognome());
+
+}
+
+
+public class QuizPersona {/**NON MODIFICARE QUESTA CLASSE**/} 
+
+
+
+
+
+
+private String destinazione;
+    private int codice;
+    
+    public Spedizione(String destinazione, int codice) {
+        this.destinazione = destinazione;
+        this.codice = codice;
+    }
+
+    public String getDestinazione() {
+        return destinazione;
+    }
+
+    public int getCodice() {
+        return codice;
+    }
+ public boolean equals(Spedizione s){
+     boolean ver=false;
+     
+     if(Integer.compare(this.getCodice(),s.getCodice())==0&&this.getDestinazione().equals(s.getDestinazione())){
+         ver=true;
+     }
+     return ver;
+ }
+ public int hashCode(){
+     String val= String.valueOf(this.codice);
+     return val.hashCode()+this.destinazione.hashCode();
+ }
+}
+

@@ -1,0 +1,54 @@
+
+1)select ordine, sum(importo) as importoTotale
+from rateemesse 
+group by (ordine)
+
+
+2)select cliente as CF, count(*) as numeroOrdini
+from ordini
+group by cliente 
+union 
+SELECT cf,0 from persone 
+where cf not in (select cliente from ordini)
+order by cf
+
+3)create view ratepagate as 
+select ordine, sum (importo) as importototalepagato
+FROM rateemesse
+where datapagamento not null
+GROUP by (ordine);
+
+create view ratetotali as
+select ordine, sum(importo) as importoTotale
+from rateemesse 
+group by (ordine); 
+
+select ratetotali.ordine, importototale, importototalepagato, importoTotale-importototalepagato as debito 
+from ratetotali join ratepagate on ratetotali.ordine= ratepagate.ordine 
+ORDER by ratetotali.ordine;
+
+4)create view  ratepagate as 
+select ordine, sum (importo) as importopagato
+FROM rateemesse
+where datapagamento not null
+GROUP by (ordine);
+
+create view ratetotali as
+select ordine, sum(importo) as importoTotale
+from rateemesse 
+group by (ordine);
+
+create view debiti as 
+select importoTotale-importopagato as debito, codice, cliente, descrizione  
+from ratetotali join ratepagate on ratetotali.ordine= ratepagate.ordine,ordini  
+where ratetotali.ordine=codice
+ORDER by ratetotali.ordine;
+
+create view maxDebito AS
+select max(importoTotale-importopagato) as debitomax 
+from ratetotali join ratepagate on ratetotali.ordine= ratepagate.ordine 
+ORDER by ratetotali.ordine;
+
+select debiti.codice as codice, debiti.cliente as cliente, debiti.descrizione as descrizione, maxDebito.debitomax as debito
+from debiti, maxDebito
+where debito= debitomax 

@@ -1,0 +1,252 @@
+
+//import java.io.BufferedReader;
+//import java.io.FileNotFoundException;
+//import java.io.FileReader;
+//import java.io.IOException;
+//import java.util.Scanner;
+//
+//import it.uniroma3.diadia.attrezzi.Attrezzo;
+//
+//public class CaricatoreLabirintoMio {
+//	LabirintoBuilder lab;
+//	private BufferedReader reader;
+//	private String stanze="Stanze:";
+//	private String stanzemagiche="StanzeMagiche:";
+//	private String stanzebuie="StanzeBuie:";
+//	private String stanzebloccate="StanzeBloccate:";
+//	private String estremi="Estremi:";
+//	private String attrezzi="Attrezzi:";
+//	private String uscite="Uscite:";
+//	private String personaggi="Personaggi:";
+//	public CaricatoreLabirintoMio() {
+//		this.lab=new LabirintoBuilder();
+//		try {
+//			this.reader = new BufferedReader(new FileReader("C:\\Users\\francesco\\Desktop\\Labirinto.txt"));
+//
+//		} catch (FileNotFoundException e) {
+//			System.out.println("file inesistente");
+//			e.printStackTrace();
+//
+//		}
+//		CaricaStanze();
+//		CaricaStanzaMagica();
+//		CaricaStanzaBuia();
+//		CaricaStanzaBloccata();
+//		CaricaEstremi();
+//		CaricaAttrezzi();
+//		CaricaUscite();
+//		CaricaPersonaggio();
+//		try {
+//			this.reader.close();
+//		} catch (IOException e) {
+//
+//			e.printStackTrace();
+//		}
+//	}
+//	private void CaricaStanze()   {
+//
+//		try {
+//			//		BufferedReader reader = new BufferedReader(new FileReader("C:\\Users\\francesco\\Desktop\\Labirinto.txt"));
+//			String next=this.reader.readLine();
+//			while(!next.equals(stanzemagiche)) {
+//				next=this.reader.readLine();
+//				if(!next.equals(stanzemagiche))
+//				{
+//					this.lab.addStanza(next);
+//					//				System.out.println(lab.GetStanza(next));
+//				}
+//
+//			}
+//		} catch (FileNotFoundException e) {
+//			System.out.println("bello sto file");
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//
+//			e.printStackTrace();
+//		}
+//
+//	}
+//	private void CaricaStanzaMagica() {
+//		try {
+//		
+//			String next=this.reader.readLine();
+//			while(!next.equals(stanzebuie)) {
+////				
+//				if(!next.equals(stanzebuie))
+//				{String[]campi=next.split(" ");
+//					this.lab.AddStanzaMagica(campi[0], Integer.parseInt(campi[1]));
+////									
+//				}
+//				next=this.reader.readLine();
+//			}
+//		} catch (FileNotFoundException e) {
+//			System.out.println("bello sto file");
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//
+//			e.printStackTrace();
+//		}
+//	}
+//	private void CaricaStanzaBuia() {
+//		try {
+//			
+//			String next=this.reader.readLine();
+//			while(!next.equals(stanzebloccate)) {
+//				
+//				if(!next.equals(stanzebloccate))
+//				{Scanner scanner = new Scanner(next);
+//				String nome= scanner.next();
+//				String oggetto=scanner.next();
+////				System.out.println(nome+oggetto);
+//					this.lab.AddStanzaBuia(oggetto, nome);
+//									
+//				}
+//				next=this.reader.readLine();
+//			}
+//		} catch (FileNotFoundException e) {
+//			System.out.println("bello sto file");
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//
+//			e.printStackTrace();
+//		}
+//	}
+//	private void CaricaStanzaBloccata() {
+//try {
+//			
+//			String next=this.reader.readLine();
+//			while(!next.equals(estremi)) {
+//				
+//				if(!next.equals(estremi))
+//				{Scanner scanner = new Scanner(next);
+//				String nome= scanner.next();
+//				String direzione=scanner.next();
+//				String oggetto=scanner.next();
+//System.out.println(nome+direzione+oggetto);
+//					this.lab.AddStanzaBloccata(nome,direzione, oggetto);
+//									
+//				}
+//				next=this.reader.readLine();
+//			}
+//		} catch (FileNotFoundException e) {
+//			System.out.println("bello sto file");
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//
+//			e.printStackTrace();
+//		}	
+//	}
+//	
+//	private void CaricaEstremi()   {
+//		try {
+//
+//			this.lab.AddIniziale(this.reader.readLine());
+//			this.lab.SetStanzaCorrente(this.lab.GetStanzaIniziale());
+//			this.lab.AddFinale(this.reader.readLine());
+//			
+//		} catch (FileNotFoundException e) {
+//			System.out.println("bello sto file");
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//
+//			e.printStackTrace();
+//		}
+//
+//	}
+//	private void CaricaAttrezzi()   {
+//		String[] campi=null;
+//		try {
+//
+//			String next=this.reader.readLine();
+//
+//			while(!next.equals(uscite)) {
+//				//split è un metodo di String che separa la stringa in + sottostringe delimitate dal carattere passato come parametro
+//				campi=next.split(" ");
+//				if(!next.equals(uscite)&&campi.length>1) {
+//
+//
+//					this.lab.GetStanza(campi[2].toString()).addAttrezzoListe(new Attrezzo(campi[0],Integer.parseInt(campi[1].toString())));
+//					//		System.out.println(this.lab.GetStanza(campi[2].toString()));
+//				}
+//				next=this.reader.readLine();
+//
+//			}
+//		} catch (FileNotFoundException e) {
+//			System.out.println("bello sto file");
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//
+//			e.printStackTrace();
+//		}
+//
+//	}
+//	private void CaricaUscite()   {
+//		String[] campi=null;
+//		try {
+////			BufferedReader reader = new BufferedReader(new FileReader("C:\\Users\\francesco\\Desktop\\Labirinto.txt"));
+//			String next=this.reader.readLine();
+//			while(!next.equals(personaggi)) {
+//				campi=next.split(" ");
+//				if(next!=null&&campi.length>1) {
+////									System.out.println(campi[0]+campi[1]+campi[2]);
+//
+//					this.lab.addAdiacenza2(campi[0], campi[2], campi[1]);
+//
+//				}
+//				next=this.reader.readLine();
+//
+//			}
+//		} catch (FileNotFoundException e) {
+//			System.out.println("bello sto file");
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//
+//			e.printStackTrace();
+//		}
+//
+//	}
+//	private void CaricaPersonaggio() {
+//		String[] campi=null;
+//		try {
+////			BufferedReader reader = new BufferedReader(new FileReader("C:\\Users\\francesco\\Desktop\\Labirinto.txt"));
+//			String next=this.reader.readLine();
+//			while(next!=null) {
+//				campi=next.split(" ");
+//				if(next!=null&&campi.length>1) {
+////									System.out.println(campi[0]+campi[1]+campi[2]+campi[3]);
+//				if(campi[0].equals("Cane")) {
+//					CreaCane(campi[4],campi[1],campi[2],campi[3]);
+//				}
+//				else if(campi[0].equals("Mago")) {
+//					CreaMago(campi[1],campi[2],campi[3]);
+//				}
+//				else if(campi[0].equals("Strega")) {
+//					CreaStrega(campi[1]);
+//				}
+//				}
+//				next=this.reader.readLine();
+//
+//			}
+//		} catch (FileNotFoundException e) {
+//			System.out.println("bello sto file");
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//	}
+//	private void CreaMago( String attrezzo ,String peso,String stanza) {
+////		Attrezzo a= new Attrezzo (attrezzo,Integer.parseInt(peso));
+////		System.out.println(new Attrezzo (attrezzo,Integer.parseInt(peso))+stanza);
+//		this.lab.addMago(stanza, new Attrezzo (attrezzo,Integer.parseInt(peso)));
+//	}
+//	private void CreaStrega(String Stanza) {
+//		this.lab.addStrega(Stanza);
+//	}
+//	private void CreaCane(String stanza, String attrezzoRestituito,String peso, String cibo) {
+//		this.lab.addCane(stanza, new Attrezzo(attrezzoRestituito,Integer.parseInt(peso)), cibo);
+//	}
+//	public Labirinto Getlabirinto() {
+//		return this.lab.GetLabirinto();
+//	}
+//
+//}

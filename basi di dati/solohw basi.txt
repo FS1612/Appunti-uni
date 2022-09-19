@@ -1,0 +1,162 @@
+CREATE TABLE Elezioni(
+    ID integer NOT NULL PRIMARY KEY,
+    Anno integer NOT NULL,
+    TipoElezione CHARACTER(20) NOT NULL 
+);
+
+INSERT INTO Elezioni VALUES(1,2000,'Politiche');
+INSERT INTO Elezioni VALUES(2,2004,'Europee');
+INSERT INTO Elezioni VALUES(3,2004,'Politiche');
+INSERT INTO Elezioni VALUES(4,2008,'Politiche');
+INSERT INTO Elezioni VALUES(5,2009,'Europee');
+
+DROP TABLE IF EXISTS Partiti ;
+CREATE TABLE Partiti(
+    Cod integer NOT NULL PRIMARY KEY,
+    Nome CHARACTER(20) NOT NULL 
+);
+INSERT INTO Partiti VALUES(101,'Partito A');
+INSERT INTO Partiti VALUES(102,'Partito B');
+INSERT INTO Partiti VALUES(103,'Partito C');
+
+
+DROP TABLE IF EXISTS Risultati;
+CREATE TABLE Risultati(
+    Elezione integer NOT NULL REFERENCES Elezioni(ID),
+    Partito integer NOT NULL REFERENCES Partiti(Cod),
+    Seggi integer NOT NULL,
+    PRIMARY KEY (Elezione,Partito)
+);
+INSERT INTO Risultati VALUES(1,101,105);
+INSERT INTO Risultati VALUES(1,102,95);
+INSERT INTO Risultati VALUES(2,101,55);
+INSERT INTO Risultati VALUES(2,102,35);
+INSERT INTO Risultati VALUES(2,103,10);
+INSERT INTO Risultati VALUES(3,101,70);
+INSERT INTO Risultati VALUES(3,102,80);
+INSERT INTO Risultati VALUES(3,103,50);
+INSERT INTO Risultati VALUES(4,101,60);
+INSERT INTO Risultati VALUES(4,102,90);
+INSERT INTO Risultati VALUES(4,103,50);
+INSERT INTO Risultati VALUES(5,101,51);
+INSERT INTO Risultati VALUES(5,102,29);
+INSERT INTO Risultati VALUES(5,103,20);
+
+
+
+
+
+5)
+
+// per avere i numeri elezione legati alle elezioni
+effettiva
+select id,anno, tipoelezione from elezioni join risultati on id = elezione
+
+select cod, nome from partiti join risultati on partito= cod
+GROUP by cod
+unendole ho dunque 
+
+create view  totale as
+select * from Risultati
+join 
+(select id,anno, tipoelezione from elezioni join risultati on id = elezione
+group by id)
+on id = elezione
+
+join 
+(select cod, nome from partiti join risultati on partito= cod GROUP by cod
+)
+on partito = cod;
+
+select tipoelezione as TipoElezione, nome as Partito, seggi as Seggi from totale
+where anno = 2004
+order by tipoelezione, seggi DESC
+
+6)
+create view  totale as
+select * from Risultati
+join 
+(select id,anno, tipoelezione from elezioni join risultati on id = elezione
+group by id)
+on id = elezione
+
+join 
+(select cod, nome from partiti join risultati on partito= cod GROUP by cod
+)
+on partito = cod;
+
+select tipoelezione as TipoElezione from totale
+where partito =101
+group by tipoelezione
+7)
+create view  totale as
+select * from Risultati
+join 
+(select id,anno, tipoelezione from elezioni join risultati on id = elezione
+group by id)
+on id = elezione
+
+join 
+(select cod, nome from partiti join risultati on partito= cod GROUP by cod
+)
+on partito = cod;
+select nome as partito, seggi as Seggi from totale
+where anno = 2009
+order by seggi desc
+8)//* effettivi
+create view  totale as
+select * from Risultati
+join 
+(select id,anno, tipoelezione from elezioni join risultati on id = elezione
+group by id)
+on id = elezione
+join 
+(select cod, nome from partiti join risultati on partito= cod GROUP by cod
+)
+on partito = cod;
+CREATE VIEW massimo4 as 
+select nome as PartitoMax, Max(seggi) as Seggimax from totale
+where tipoelezione = 'Politiche'
+group by  partito;
+
+
+SELECT nome as Nome, anno as Anno, SeggiMax as Seggi  from totale, massimo4 
+where (seggi = SeggiMax) & (nome = PartitoMax)
+
+
+
+//* per trovare i valori massimi dei seggi 
+CREATE VIEW massimo as 
+select nome as Partito, Max(seggi) as Seggimax from totale
+where partito =101
+union
+select nome as Partito, Max(seggi) as Seggimax from totale
+where partito =102
+union;
+select nome as Partito, Max(seggi) as Seggimax from totale
+where partito =103;
+select nome as Nome, anno as Anno, seggi as Seggi from totale
+join 
+massimo on seggi = seggimax
+where (id=1) or( id=3 ) or( id=4)
+order by totale.partito 
+(sul compiltore del prof non lo da completamente passato, ma su sqlite funziona)
+
+//////////////////////////parte di algebra relazionale////////////////////////////
+
+π Risultati.Seggi ,Risultati.Partito	, Elezioni.Anno, Elezioni.TipoElezione,Partiti.Nome
+
+3)
+π Risultati.Partito,Partiti.Nome
+σ  Risultati.Seggi>=10 AND  Elezioni.TipoElezione ='Europee'
+
+π  Risultati.Seggi ,Risultati.Partito	, Elezioni.Anno, Elezioni.TipoElezione,Partiti.Nome
+
+(π Elezione, Partito, Seggi (Risultati) join ID = Elezione (π ID, Anno, TipoElezione (Elezioni join ID = Elezione Risultati)) join Partito = Cod  ( π Cod, Nome (Partiti join Partito = Cod Risultati)))
+
+4) π Nome, Cod (Partiti)-
+(π Partiti.Nome , Partiti.Cod	
+(γ Partito; max(Elezione)-> Elezione (π Elezione, Partito (Risultati) ⨝ Elezione=ID  Elezioni)  ⨝ Risultati.Partito = Cod Partiti
+-
+γ Partito; count(*)-> Elezione (π Elezione, Partito (Risultati)⨝ Elezione=ID  Elezioni)  ⨝ Risultati.Partito = Cod Partiti))
+
